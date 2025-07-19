@@ -16,7 +16,7 @@ public class Libro {
     @Column(nullable = false)
     private String titulo;
 
-    @Column
+    @Column(nullable = false)
     private Integer paginas;
 
     @ManyToOne

@@ -7,7 +7,7 @@ import java.util.List;
 public class UsuarioResponse {
     private Long idUsuario;
     private String nombre;
-    private List<Long> librosLeidos; // Solo los ID de los libros
+    private List<LibroResponse> librosLeidos;
     private List<DeseadoResponse> listaDeseados;
 }
 

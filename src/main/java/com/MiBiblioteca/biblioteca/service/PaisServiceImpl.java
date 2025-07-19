@@ -10,6 +10,8 @@ import com.MiBiblioteca.biblioteca.entity.dto.PaisResponse;
 import com.MiBiblioteca.biblioteca.repository.PaisRepository;
 import com.MiBiblioteca.biblioteca.service.interfaces.PaisService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @Service
@@ -34,14 +36,14 @@ public class PaisServiceImpl implements PaisService {
     }
 
     @Override
-    public PaisResponse createPais(PaisRequest request) {
+    public PaisResponse createPais(@Valid PaisRequest request) {
         Pais pais = new Pais();
         pais.setNombre(request.getNombre());
         return mapToResponse(paisRepository.save(pais));
     }
 
     @Override
-    public PaisResponse updatePais(Long id, PaisRequest request) {
+    public PaisResponse updatePais(Long id, @Valid PaisRequest request) {
         Pais pais = paisRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("País no encontrado"));
 

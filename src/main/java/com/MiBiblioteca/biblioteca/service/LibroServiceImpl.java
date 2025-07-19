@@ -5,9 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import com.MiBiblioteca.biblioteca.entity.Autor;
+import com.MiBiblioteca.biblioteca.entity.Editorial;
+import com.MiBiblioteca.biblioteca.entity.Genero;
 import com.MiBiblioteca.biblioteca.entity.Libro;
+import com.MiBiblioteca.biblioteca.entity.Ubicacion;
 import com.MiBiblioteca.biblioteca.entity.dto.LibroRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.LibroResponse;
 import com.MiBiblioteca.biblioteca.repository.*;
@@ -41,49 +46,48 @@ public class LibroServiceImpl implements LibroService {
     }
 
     @Override
-    public LibroResponse createLibro(LibroRequest dto) {
+    public LibroResponse createLibro(@Valid LibroRequest dto) {
         Libro libro = new Libro();
         libro.setTitulo(dto.getTitulo());
+
         libro.setPaginas(dto.getPaginas());
 
-        if (dto.getUbicacionId() != null) {
-            var ubicacion = ubicacionRepository.findById(dto.getUbicacionId())
-                    .orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
-            libro.setUbicacion(ubicacion);
-        }
+        Ubicacion ubicacion = ubicacionRepository.findById(dto.getUbicacionId())
+                .orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
+        libro.setUbicacion(ubicacion);
 
-        if (dto.getAutoresIds() != null && !dto.getAutoresIds().isEmpty()) {
-            var autores = autorRepository.findAllById(dto.getAutoresIds());
-            libro.setAutores(autores);
-        }
+        List<Autor> autores = autorRepository.findAllById(dto.getAutoresIds());
+        libro.setAutores(autores);
 
-        if (dto.getGenerosIds() != null && !dto.getGenerosIds().isEmpty()) {
-            var generos = generoRepository.findAllById(dto.getGenerosIds());
-            libro.setGeneros(generos);
-        }
+        List<Genero> generos = generoRepository.findAllById(dto.getGenerosIds());
+        libro.setGeneros(generos);
 
-        if (dto.getEditorialesIds() != null && !dto.getEditorialesIds().isEmpty()) {
-            var Editorial = editorialRepository.findAllById(dto.getEditorialesIds());
-            libro.setEditoriales(Editorial);
-        }
+        List<Editorial> Editorial = editorialRepository.findAllById(dto.getEditorialesIds());
+        libro.setEditoriales(Editorial);
 
         Libro guardado = libroRepository.save(libro);
         return mapToResponse(guardado);
     }
 
     @Override
-    public LibroResponse updateLibro(Long id, LibroRequest dto) {
+    public LibroResponse updateLibro(Long id, @Valid LibroRequest dto) {
         Libro libro = libroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
 
         libro.setTitulo(dto.getTitulo());
+
         libro.setPaginas(dto.getPaginas());
 
-        if (dto.getUbicacionId() != null) {
-            var ubicacion = ubicacionRepository.findById(dto.getUbicacionId())
-                    .orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
-            libro.setUbicacion(ubicacion);
-        }
+        Ubicacion ubicacion = ubicacionRepository.findById(dto.getUbicacionId())
+                .orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
+        libro.setUbicacion(ubicacion);
+
+        libro.setAutores(autorRepository.findAllById(dto.getAutoresIds()));
+
+        libro.setGeneros(generoRepository.findAllById(dto.getGenerosIds()));
+
+        libro.setEditoriales(editorialRepository.findAllById(dto.getEditorialesIds()));
+
 
         Libro actualizado = libroRepository.save(libro);
         return mapToResponse(actualizado);

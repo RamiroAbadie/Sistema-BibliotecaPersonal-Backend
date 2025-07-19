@@ -1,6 +1,7 @@
 package com.MiBiblioteca.biblioteca.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class DeseadoServiceImpl implements DeseadoService {
     }
 
     @Override
-    public DeseadoResponse agregarDeseado(Long idUsuario, DeseadoRequest request) {
+    public DeseadoResponse agregarDeseado(Long idUsuario, @Valid DeseadoRequest request) {
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -42,13 +43,9 @@ public class DeseadoServiceImpl implements DeseadoService {
         deseado.setAutor(request.getAutor());
         deseado.setUsuario(usuario);
 
-        Deseado guardado = deseadoRepository.save(deseado);
+        deseadoRepository.save(deseado);
 
-        DeseadoResponse response = new DeseadoResponse();
-        response.setIdDeseado(guardado.getIdDeseado());
-        response.setTitulo(guardado.getTitulo());
-        response.setAutor(guardado.getAutor());
-        return response;
+        return mapToDto(deseado);
     }
 
     @Override
@@ -61,6 +58,7 @@ public class DeseadoServiceImpl implements DeseadoService {
         response.setIdDeseado(deseado.getIdDeseado());
         response.setTitulo(deseado.getTitulo());
         response.setAutor(deseado.getAutor());
+        response.setUsuario(deseado.getUsuario().getNombre());
         
         return response;
     }

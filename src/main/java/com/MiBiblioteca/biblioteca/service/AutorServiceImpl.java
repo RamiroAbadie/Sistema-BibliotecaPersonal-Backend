@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.MiBiblioteca.biblioteca.entity.Autor;
+import com.MiBiblioteca.biblioteca.entity.Pais;
 import com.MiBiblioteca.biblioteca.entity.dto.AutorRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.AutorResponse;
 import com.MiBiblioteca.biblioteca.repository.AutorRepository;
 import com.MiBiblioteca.biblioteca.repository.PaisRepository;
 import com.MiBiblioteca.biblioteca.service.interfaces.AutorService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -38,33 +40,32 @@ public class AutorServiceImpl implements AutorService {
     }
 
     @Override
-    public AutorResponse createAutor(AutorRequest request) {
+    public AutorResponse createAutor(@Valid AutorRequest request) {
         Autor autor = new Autor();
+
         autor.setNombre(request.getNombre());
+        
         autor.setSexo(request.getSexo());
 
-        if (request.getPaisId() != null) {
-            var pais = paisRepository.findById(request.getPaisId())
+        Pais pais = paisRepository.findById(request.getPaisId())
                     .orElseThrow(() -> new RuntimeException("País no encontrado"));
-            autor.setPais(pais);
-        }
+        autor.setPais(pais);
 
         return mapToResponse(AutorRepository.save(autor));
     }
 
     @Override
-    public AutorResponse updateAutor(Long id, AutorRequest request) {
+    public AutorResponse updateAutor(Long id, @Valid AutorRequest request) {
         Autor autor = AutorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Autor no encontrado"));
 
         autor.setNombre(request.getNombre());
+
         autor.setSexo(request.getSexo());
 
-        if (request.getPaisId() != null) {
-            var pais = paisRepository.findById(request.getPaisId())
-                    .orElseThrow(() -> new RuntimeException("País no encontrado"));
-            autor.setPais(pais);
-        }
+        Pais pais = paisRepository.findById(request.getPaisId())
+                .orElseThrow(() -> new RuntimeException("País no encontrado"));
+        autor.setPais(pais);
 
         return mapToResponse(AutorRepository.save(autor));
     }

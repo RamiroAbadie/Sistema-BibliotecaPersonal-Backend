@@ -1,12 +1,14 @@
 package com.MiBiblioteca.biblioteca.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.MiBiblioteca.biblioteca.entity.Libro;
 import com.MiBiblioteca.biblioteca.entity.Usuario;
 import com.MiBiblioteca.biblioteca.entity.dto.DeseadoResponse;
+import com.MiBiblioteca.biblioteca.entity.dto.LibroResponse;
 import com.MiBiblioteca.biblioteca.entity.dto.UsuarioRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.UsuarioResponse;
 import com.MiBiblioteca.biblioteca.repository.LibroRepository;
@@ -26,7 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final LibroRepository libroRepository;
 
     @Override
-    public UsuarioResponse crearUsuario(UsuarioRequest request) {
+    public UsuarioResponse crearUsuario(@Valid UsuarioRequest request) {
         Usuario usuario = new Usuario();
         usuario.setNombre(request.getNombre());
         usuario.setLibrosLeidos(new ArrayList<>());
@@ -82,10 +84,19 @@ public class UsuarioServiceImpl implements UsuarioService {
         response.setIdUsuario(usuario.getIdUsuario());
         response.setNombre(usuario.getNombre());
         response.setLibrosLeidos(
-                usuario.getLibrosLeidos()
-                        .stream()
-                        .map(Libro::getIdLibro)
-                        .collect(Collectors.toList())
+            usuario.getLibrosLeidos()
+                    .stream()
+                    .map(d -> {
+                        LibroResponse lr = new LibroResponse();
+                        lr.setIdLibro(d.getIdLibro());
+                        lr.setTitulo(d.getTitulo());
+                        lr.setPaginas(d.getPaginas());
+                        lr.setUbicacion(d.getUbicacion().getReferencia());
+                        lr.setAutores(d.getAutores().stream().map(a -> a.getNombre()).toList());
+                        lr.setGeneros(d.getGeneros().stream().map(g -> g.getDescripcion()).toList());
+                        lr.setEditoriales(d.getEditoriales().stream().map(e -> e.getNombre()).toList());
+                        return lr;
+                    }).collect(Collectors.toList())
         );
         response.setListaDeseados(
                 usuario.getListaDeseados()

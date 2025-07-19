@@ -10,6 +10,8 @@ import com.MiBiblioteca.biblioteca.entity.dto.GeneroResponse;
 import com.MiBiblioteca.biblioteca.repository.GeneroRepository;
 import com.MiBiblioteca.biblioteca.service.interfaces.GeneroService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @Service
@@ -34,14 +36,14 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @Override
-    public GeneroResponse createGenero(GeneroRequest request) {
+    public GeneroResponse createGenero(@Valid GeneroRequest request) {
         Genero genero = new Genero();
         genero.setDescripcion(request.getDescripcion());
         return mapToResponse(GeneroRepository.save(genero));
     }
 
     @Override
-    public GeneroResponse updateGenero(Long id, GeneroRequest request) {
+    public GeneroResponse updateGenero(Long id, @Valid GeneroRequest request) {
         Genero genero = GeneroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Género no encontrado"));
 

@@ -5,11 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.MiBiblioteca.biblioteca.entity.Editorial;
+import com.MiBiblioteca.biblioteca.entity.Pais;
 import com.MiBiblioteca.biblioteca.entity.dto.EditorialRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.EditorialResponse;
 import com.MiBiblioteca.biblioteca.repository.EditorialRepository;
 import com.MiBiblioteca.biblioteca.repository.PaisRepository;
 import com.MiBiblioteca.biblioteca.service.interfaces.EditorialService;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -36,33 +39,32 @@ public class EditorialServiceImpl implements EditorialService {
     }
 
     @Override
-    public EditorialResponse createEditorial(EditorialRequest request) {
+    public EditorialResponse createEditorial(@Valid EditorialRequest request) {
         Editorial editorial = new Editorial();
+
         editorial.setNombre(request.getNombre());
 
-        if (request.getPaisId() != null) {
-            var pais = paisRepository.findById(request.getPaisId())
-                    .orElseThrow(() -> new RuntimeException("País no encontrado"));
-            editorial.setPais(pais);
-        }
+        Pais pais = paisRepository.findById(request.getPaisId())
+                .orElseThrow(() -> new RuntimeException("País no encontrado"));
+        editorial.setPais(pais);
 
         return mapToResponse(EditorialRepository.save(editorial));
     }
 
     @Override
-    public EditorialResponse updateEditorial(Long id, EditorialRequest request) {
+    public EditorialResponse updateEditorial(Long id, @Valid EditorialRequest request) {
         Editorial editorial = EditorialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Editorial no encontrada"));
 
         editorial.setNombre(request.getNombre());
 
-        if (request.getPaisId() != null) {
-            var pais = paisRepository.findById(request.getPaisId())
-                    .orElseThrow(() -> new RuntimeException("País no encontrado"));
-            editorial.setPais(pais);
-        }
+        Pais pais = paisRepository.findById(request.getPaisId())
+                .orElseThrow(() -> new RuntimeException("País no encontrado"));
+        editorial.setPais(pais);
 
-        return mapToResponse(EditorialRepository.save(editorial));
+        EditorialRepository.save(editorial);
+
+        return mapToResponse(editorial);
     }
 
     @Override

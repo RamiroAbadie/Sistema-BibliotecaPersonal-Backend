@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.util.List;
 
+import com.MiBiblioteca.biblioteca.enums.Sexo;
+
 @Data
 @Entity
 public class Autor {
@@ -16,8 +18,9 @@ public class Autor {
     @Column(nullable = false)
     private String nombre;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private String sexo;
+    private Sexo sexo; // puede ser null (Solo para autor "Sin autor")
 
     @ManyToOne
     @JoinColumn(name = "idPais", nullable = false)
