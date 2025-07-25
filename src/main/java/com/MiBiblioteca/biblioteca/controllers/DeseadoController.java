@@ -10,6 +10,8 @@ import com.MiBiblioteca.biblioteca.entity.dto.DeseadoRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.DeseadoResponse;
 import com.MiBiblioteca.biblioteca.service.interfaces.DeseadoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/deseados")
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class DeseadoController {
     @PostMapping("/{idUsuario}")
     public DeseadoResponse agregarDeseado(
             @PathVariable Long idUsuario,
-            @RequestBody DeseadoRequest request) {
+            @Valid @RequestBody DeseadoRequest request) {
         return deseadoService.agregarDeseado(idUsuario, request);
     }
 

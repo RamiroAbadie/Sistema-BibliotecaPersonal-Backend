@@ -7,6 +7,7 @@ import com.MiBiblioteca.biblioteca.entity.dto.LibroRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.LibroResponse;
 import com.MiBiblioteca.biblioteca.service.interfaces.LibroService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -33,12 +34,12 @@ public class LibroController {
     }
 
     @PostMapping
-    public ResponseEntity<LibroResponse> createLibro(@RequestBody LibroRequest request) {
+    public ResponseEntity<LibroResponse> createLibro(@Valid @RequestBody LibroRequest request) {
         return ResponseEntity.ok(libroService.createLibro(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LibroResponse> updateLibro(@PathVariable Long id, @RequestBody LibroRequest request) {
+    public ResponseEntity<LibroResponse> updateLibro(@PathVariable Long id, @Valid @RequestBody LibroRequest request) {
         return ResponseEntity.ok(libroService.updateLibro(id, request));
     }
 

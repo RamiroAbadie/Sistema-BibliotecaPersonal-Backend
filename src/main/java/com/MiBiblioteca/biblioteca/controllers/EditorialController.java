@@ -17,6 +17,8 @@ import com.MiBiblioteca.biblioteca.entity.dto.EditorialRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.EditorialResponse;
 import com.MiBiblioteca.biblioteca.service.interfaces.EditorialService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/editoriales")
 @RequiredArgsConstructor
@@ -39,12 +41,12 @@ public class EditorialController {
     }
 
     @PostMapping
-    public ResponseEntity<EditorialResponse> createEditorial(@RequestBody EditorialRequest request) {
+    public ResponseEntity<EditorialResponse> createEditorial(@Valid @RequestBody EditorialRequest request) {
         return ResponseEntity.ok(editorialService.createEditorial(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EditorialResponse> updateEditorial(@PathVariable Long id, @RequestBody EditorialRequest request) {
+    public ResponseEntity<EditorialResponse> updateEditorial(@PathVariable Long id, @Valid @RequestBody EditorialRequest request) {
         return ResponseEntity.ok(editorialService.updateEditorial(id, request));
     }
 

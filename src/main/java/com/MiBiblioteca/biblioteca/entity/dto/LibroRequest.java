@@ -6,6 +6,7 @@ import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Data
 public class LibroRequest {
@@ -13,11 +14,11 @@ public class LibroRequest {
     @NotNull(message = "El titulo no puede ser nulo")
     private String titulo;
 
-    @NotBlank(message = "Las paginas no pueden estar vacias")
+    @Positive
     @NotNull(message = "Las paginas no puede ser nulo")
     private Integer paginas;
 
-    @NotBlank(message = "La ubicacionId no puede estar vacia")
+    @Positive
     @NotNull(message = "La ubicacionId no puede ser nulo")
     private Long ubicacionId;
 

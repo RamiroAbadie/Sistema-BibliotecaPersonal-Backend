@@ -8,6 +8,8 @@ import com.MiBiblioteca.biblioteca.entity.dto.AutorRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.AutorResponse;
 import com.MiBiblioteca.biblioteca.service.interfaces.AutorService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -32,12 +34,12 @@ public class AutorController {
     }
 
     @PostMapping
-    public ResponseEntity<AutorResponse> createAutor(@RequestBody AutorRequest request) {
+    public ResponseEntity<AutorResponse> createAutor(@Valid @RequestBody AutorRequest request) {
         return ResponseEntity.ok(autorService.createAutor(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AutorResponse> updateAutor(@PathVariable Long id, @RequestBody AutorRequest request) {
+    public ResponseEntity<AutorResponse> updateAutor(@PathVariable Long id, @Valid @RequestBody AutorRequest request) {
         return ResponseEntity.ok(autorService.updateAutor(id, request));
     }
 

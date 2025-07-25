@@ -8,6 +8,8 @@ import com.MiBiblioteca.biblioteca.entity.dto.PaisRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.PaisResponse;
 import com.MiBiblioteca.biblioteca.service.interfaces.PaisService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -32,12 +34,12 @@ public class PaisController {
     }
 
     @PostMapping
-    public ResponseEntity<PaisResponse> createPais(@RequestBody PaisRequest request) {
+    public ResponseEntity<PaisResponse> createPais(@Valid @RequestBody PaisRequest request) {
         return ResponseEntity.ok(paisService.createPais(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PaisResponse> updatePais(@PathVariable Long id, @RequestBody PaisRequest request) {
+    public ResponseEntity<PaisResponse> updatePais(@PathVariable Long id, @Valid @RequestBody PaisRequest request) {
         return ResponseEntity.ok(paisService.updatePais(id, request));
     }
 

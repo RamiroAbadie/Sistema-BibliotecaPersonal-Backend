@@ -8,6 +8,8 @@ import com.MiBiblioteca.biblioteca.entity.dto.GeneroRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.GeneroResponse;
 import com.MiBiblioteca.biblioteca.service.interfaces.GeneroService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -32,12 +34,12 @@ public class GeneroController {
     }
 
     @PostMapping
-    public ResponseEntity<GeneroResponse> createGenero(@RequestBody GeneroRequest request) {
+    public ResponseEntity<GeneroResponse> createGenero(@Valid @RequestBody GeneroRequest request) {
         return ResponseEntity.ok(generoService.createGenero(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GeneroResponse> updateGenero(@PathVariable Long id, @RequestBody GeneroRequest request) {
+    public ResponseEntity<GeneroResponse> updateGenero(@PathVariable Long id, @Valid @RequestBody GeneroRequest request) {
         return ResponseEntity.ok(generoService.updateGenero(id, request));
     }
 

@@ -4,6 +4,7 @@ import com.MiBiblioteca.biblioteca.enums.Sexo;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
@@ -16,7 +17,7 @@ public class AutorRequest {
     private Sexo sexo;
 
     @NotNull(message = "El nombre no puede ser nulo")
-    @NotBlank(message = "El paisId es obligatorio")
+    @Positive
     private Long paisId;
 }
 

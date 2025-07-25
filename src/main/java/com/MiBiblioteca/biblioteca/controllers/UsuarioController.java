@@ -7,6 +7,8 @@ import com.MiBiblioteca.biblioteca.entity.dto.UsuarioRequest;
 import com.MiBiblioteca.biblioteca.entity.dto.UsuarioResponse;
 import com.MiBiblioteca.biblioteca.service.interfaces.UsuarioService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -17,7 +19,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public UsuarioResponse crearUsuario(@RequestBody UsuarioRequest request) {
+    public UsuarioResponse crearUsuario(@Valid @RequestBody UsuarioRequest request) {
         return usuarioService.crearUsuario(request);
     }
 

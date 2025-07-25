@@ -2,7 +2,6 @@ package com.MiBiblioteca.biblioteca.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -23,7 +22,6 @@ import com.MiBiblioteca.biblioteca.service.interfaces.LibroService;
 @RequiredArgsConstructor
 public class LibroServiceImpl implements LibroService {
 
-    @Autowired //Creo que igual no hace falta por el @RequiredArgsConstructor
     private final LibroRepository libroRepository;
     private final UbicacionRepository ubicacionRepository;
     private final AutorRepository autorRepository;
