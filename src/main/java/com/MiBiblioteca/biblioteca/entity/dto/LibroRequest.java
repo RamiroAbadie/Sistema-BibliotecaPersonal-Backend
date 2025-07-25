@@ -5,6 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -22,15 +23,15 @@ public class LibroRequest {
     @NotNull(message = "La ubicacionId no puede ser nulo")
     private Long ubicacionId;
 
-    @NotBlank(message = "Los autoresIds no pueden estar vacios")
+    @NotEmpty(message = "Los autoresIds no pueden estar vacios")
     @NotNull(message = "Los autoresIds no pueden ser nulo")
     private List<Long> autoresIds;
 
-    @NotBlank(message = "Los generosIds no pueden estar vacios")
+    @NotEmpty(message = "Los generosIds no pueden estar vacios")
     @NotNull(message = "Los generosIds no pueden ser nulo")
     private List<Long> generosIds;
 
-    @NotBlank(message = "Los editorialesIds no pueden estar vacios")
+    @NotEmpty(message = "Los editorialesIds no pueden estar vacios")
     @NotNull(message = "Las editorialesIds no pueden ser nulo")
     private List<Long> editorialesIds;
 
