@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/deseados")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class DeseadoController {
 
     private final DeseadoService deseadoService;

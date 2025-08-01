@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/autores")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class AutorController {
 
     private final AutorService autorService;
