@@ -13,7 +13,7 @@ public class AutorRequest {
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 
-    @NotBlank(message = "El sexo es obligatorio")
+    @NotNull(message = "El sexo es obligatorio")
     private Sexo sexo;
 
     @NotNull(message = "El nombre no puede ser nulo")
